@@ -48,6 +48,7 @@ public class FXMLController implements Initializable {
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow(); 
         stage.setTitle("Notepad");
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
     }
     
