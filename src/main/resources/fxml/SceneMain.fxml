@@ -31,7 +31,7 @@
               </rowConstraints>
                <children>
                   <ImageView fx:id="imageView" fitHeight="332.0" fitWidth="457.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
-                  <TextArea fx:id="noteTextfield" prefHeight="200.0" prefWidth="200.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
+                  <TextArea fx:id="noteTextArea" prefHeight="200.0" prefWidth="200.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
                </children>
             </GridPane>
             <ListView fx:id="notesListView" maxHeight="1.7976931348623157E308" prefHeight="690.0" prefWidth="305.0" />

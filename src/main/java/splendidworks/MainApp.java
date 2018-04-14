@@ -1,3 +1,9 @@
+/*
+ * MainApp.java
+ * Ayti i klasi ine aparaititi gia tin ekinisi tis javafx efarmogis
+ * 
+ */
+
 package splendidworks;
 
 import javafx.application.Application;
@@ -20,7 +26,7 @@ public class MainApp extends Application {
         stage.setTitle("JavaFX and Maven");
         stage.setScene(scene);
         stage.setResizable(false);
-        stage.show();
+        stage.show(); 
     }
 
     /**

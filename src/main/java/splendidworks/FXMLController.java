@@ -1,3 +1,8 @@
+/*
+ * SceneMainController.java
+ * Klasi controller gia to parathiro Scene.fxml
+ */
+
 package splendidworks;
 
 import java.io.IOException;
