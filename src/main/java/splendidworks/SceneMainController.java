@@ -44,7 +44,7 @@ public class SceneMainController implements Initializable {
         notes.add(new Note("sidirodromos", "/images/img1.jpg", "Lorem ipsum dolor sit amet"));
         notes.add(new Note("kataraktis", "/images/img2.jpg", "consectetur adipiscing elit"));
         notes.add(new Note("paralia", "/images/img3.jpg", "Cras non dui ut sapien dictum aliquet vel ac tortor"));
-        notes.add(new Note("skiouros", "/images/img4.jpg", "Pellentesque habitant morbi tristique senectus"));
+        notes.add(new Note("skiouros", "/images/img4.jpg", "kopoume de la mathima la satiempo carmina"));
         notes.add(new Note("paralia2", "/images/img5.jpg", " et netus et malesuada fames ac turpis egestas"));
         
         //sindesi tou optikou antikeimenou notesListView me ti lista notes
