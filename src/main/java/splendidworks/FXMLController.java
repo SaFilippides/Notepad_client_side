@@ -16,6 +16,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class FXMLController implements Initializable {
@@ -23,23 +24,39 @@ public class FXMLController implements Initializable {
     // metavlites gia allilepidrasi me to GUI
     @FXML private Button registerBtn;
     @FXML private Button signBtn;
-    
+    @FXML private TextField usernameRegister;
+    @FXML private TextField passwordRegister;
     
     @FXML
     // methodos pou antapokrinete sta patimata koubion
     private void handleButtonAction(ActionEvent event) throws IOException {
+        String error;
+        error="";
+        if(usernameRegister.getText().equals(""))
+        {
+            error = String.format("No username was given");//ενσωματωνει ενα μνμ με το format που δεινω
+            
+        }
+        if(passwordRegister.getText().equals(""))
+        {
+            
+             error += String.format("\nNo password was given");
+             //error +={κανει apent το μνμ που προσθετουμε ή κανει προσθεση στο υπαρχων μνμ}   
+        }
         
-        if (event.getSource() == registerBtn)
+        
+        if (event.getSource() == registerBtn && error=="")//Το getSource επιστρεφει στο κωδικα το κουμπι που πατησε  
         {
             System.out.println("ok");
             changeScene(event);
         }
-        else if (event.getSource() == signBtn)
+        if (event.getSource() == signBtn)
         {
             System.out.println("ok2");
             changeScene(event);
+            
         }
-        
+        System.out.println(error);
     }
     
     // methodos allagis apo parathiro login/register sto kirio parathiro tis efarmogis
