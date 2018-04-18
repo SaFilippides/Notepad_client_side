@@ -2,4 +2,5 @@ splendidworks\SceneMainController.class
 splendidworks\SceneMainController$1.class
 splendidworks\FXMLController.class
 model\Note.class
+splendidworks\NewNoteController.class
 splendidworks\MainApp.class

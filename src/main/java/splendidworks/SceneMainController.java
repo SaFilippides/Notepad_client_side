@@ -4,18 +4,26 @@
  */
 package splendidworks;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
 import model.Note;
 
 /**
@@ -29,8 +37,25 @@ public class SceneMainController implements Initializable {
     @FXML private ListView<Note> notesListView;
     @FXML private ImageView imageView;
     @FXML private TextArea noteTextArea;
-    
+    @FXML private Button newBtn;
     // apothikevi lista apo antikeimena Note
+    @FXML
+    
+    //Anoigma parathurou neas simeiosis
+    private void handleButtonAction2(ActionEvent event) throws IOException
+    {
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/NewNote.fxml"));
+        Scene scene = new Scene(root);
+        
+        scene.getStylesheets().add("/styles/newnote.css");
+        
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow(); 
+        stage.setTitle("New Note");
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+    }
+    
     private final ObservableList<Note> notes =
             FXCollections.observableArrayList();
     

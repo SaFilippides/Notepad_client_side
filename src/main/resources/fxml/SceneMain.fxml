@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="755.0" prefWidth="910.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="splendidworks.SceneMainController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="755.0" prefWidth="910.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="splendidworks.SceneMainController">
    <children>
       <GridPane layoutX="15.0" layoutY="7.0" prefHeight="668.0" prefWidth="910.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
@@ -54,7 +54,7 @@
             <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
          </padding>
          <children>
-            <Button mnemonicParsing="false" text="Button" GridPane.halignment="CENTER" />
+            <Button fx:id="newBtn" mnemonicParsing="false" onAction="#handleButtonAction2" prefHeight="25.0" prefWidth="61.0" text="New" GridPane.halignment="CENTER" />
             <Button mnemonicParsing="false" text="Button" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
             <Button mnemonicParsing="false" text="Button" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
             <Button mnemonicParsing="false" text="Button" GridPane.columnIndex="3" GridPane.halignment="CENTER" />
