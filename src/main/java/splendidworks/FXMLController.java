@@ -17,6 +17,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import javax.json.Json;
+
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.GenericType;
+import javax.ws.rs.core.MediaType;
 
 public class FXMLController implements Initializable {
 
@@ -53,8 +62,25 @@ public class FXMLController implements Initializable {
             }
 
             if (error == "") {
-                System.out.println("ok");
-                changeScene(event);
+
+                // paradeigma dimiourgias json model apo documentation https://docs.oracle.com/javaee/7/api/index.html?javax/json/JsonObjectBuilder.html
+                    String json = Json.createObjectBuilder()
+                        .add("password", passwordRegister.getText())
+                        .add("username", usernameRegister.getText())
+                        .build()
+                        .toString();
+                
+                // Set up our client and target our JAX-RS service 
+                Client client = ClientBuilder.newClient();
+                WebTarget target = client.target("http://localhost:8080/Notepad_server_side/user/add/");
+
+                // Build our request JSON into an 'Entity'. Replace 'myData' with your JSON
+                Entity<String> data = Entity.entity(json, MediaType.APPLICATION_JSON_TYPE);
+                System.out.print("op" + data.getEntity());
+                // Then send a post request to the target service
+                String result = target.request(MediaType.APPLICATION_JSON_TYPE).post(data, String.class);
+
+                //changeScene(event);
             }
 
         }
