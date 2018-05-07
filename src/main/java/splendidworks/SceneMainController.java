@@ -6,6 +6,7 @@ package splendidworks;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -24,7 +25,12 @@ import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.GenericType;
 import model.Note;
+import parser.NoteJsonParser;
 
 /**
  * FXML Controller class
@@ -34,62 +40,76 @@ import model.Note;
 public class SceneMainController implements Initializable {
 
     // metavlites gia allilepidrasi me to GUI
-    @FXML private ListView<Note> notesListView;
-    @FXML private ImageView imageView;
-    @FXML private TextArea noteTextArea;
-    @FXML private Button newBtn;
+    @FXML
+    private ListView<Note> notesListView;
+    @FXML
+    private ImageView imageView;
+    @FXML
+    private TextArea noteTextArea;
+    @FXML
+    private Button newBtn;
+
     // apothikevi lista apo antikeimena Note
     @FXML
-    
+
     //Anoigma parathurou neas simeiosis
-    private void handleButtonAction2(ActionEvent event) throws IOException
-    {
+    private void handleButtonAction2(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/NewNote.fxml"));
         Scene scene = new Scene(root);
-        
+
         scene.getStylesheets().add("/styles/newnote.css");
-        
-        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow(); 
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("New Note");
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
     }
-    
-    private final ObservableList<Note> notes =
-            FXCollections.observableArrayList();
-    
+
+    private ObservableList<Note> notes = null;
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
+        Client client = ClientBuilder.newClient();
+        client.register(NoteJsonParser.class);
+        WebTarget clientTarget = client.target("http://localhost:8080/Notepad_server_side/note/view/{beginBy}");
+        clientTarget = clientTarget.resolveTemplate("beginBy", FXMLController.getUser().getId());
+        GenericType<List<Note>> listc = new GenericType<List<Note>>() {
+        };
         
-        // fortosi  listas ObservableList<Note> me antikeimena Note
-        notes.add(new Note("sidirodromos", "/images/img1.jpg", "Lorem ipsum dolor sit amet"));
-        notes.add(new Note("kataraktis", "/images/img2.jpg", "consectetur adipiscing elit"));
-        notes.add(new Note("paralia", "/images/img3.jpg", "Cras non dui ut sapien dictum aliquet vel ac tortor"));
-        notes.add(new Note("skiouros", "/images/img4.jpg", "kopoume de la mathima la satiempo carmina"));
-        notes.add(new Note("paralia2", "/images/img5.jpg", " et netus et malesuada fames ac turpis egestas"));
-        
-        //sindesi tou optikou antikeimenou notesListView me ti lista notes
-        notesListView.setItems(notes);
-        
-        // otan o xristis allazei epilogi sto ListView, deikse tin ekastote eikona kai simeiosi sta antistoixa components
-        notesListView.getSelectionModel().selectedItemProperty().addListener(
-                new ChangeListener<Note>() {
+        try
+        {
+            notes = FXCollections.observableArrayList(clientTarget.request("application/json").get(listc));
+
+            //sindesi tou optikou antikeimenou notesListView me ti lista notes
+            notesListView.setItems(notes);
+
+            // otan o xristis allazei epilogi sto ListView, deikse tin ekastote eikona kai simeiosi sta antistoixa components
+            notesListView.getSelectionModel().selectedItemProperty().addListener(
+                    new ChangeListener<Note>() {
                 @Override
-                public void changed(ObservableValue<? extends Note> ov, 
-                    Note old_val, Note new_val) 
-                    {
+                public void changed(ObservableValue<? extends Note> ov,
+                        Note old_val, Note new_val) {
+                    if (!new_val.getImageURL().isEmpty())
+                    {    
                         imageView.setImage(new Image(new_val.getImageURL()));
                         System.out.println(new_val.getImageURL());
-                        noteTextArea.setText(new_val.getNote());
                     }
-               }
-        );
-        
-        
-    }    
-    
+
+
+                    noteTextArea.setText(new_val.getNote());
+                    }
+                }
+            );
+        }
+        catch(Exception ex)
+        {
+            
+        }
+    }
+
 }

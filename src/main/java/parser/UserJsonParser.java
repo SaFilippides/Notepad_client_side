@@ -56,6 +56,9 @@ public class UserJsonParser implements MessageBodyReader<List<AppUser>> {
                         String key = parser.getString();
                         parser.next();
                         switch (key) {
+                            case "id":
+                                user.setId(parser.getInt());
+                                break;
                             case "password":
                                 user.setPassword(parser.getString());
                                 break;

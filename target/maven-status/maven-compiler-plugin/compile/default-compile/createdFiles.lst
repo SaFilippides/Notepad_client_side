@@ -1,9 +1,14 @@
+splendidworks\FXMLController$2.class
+parser\UserJsonParser$1.class
+splendidworks\MainApp.class
 model\AppUser.class
 splendidworks\SceneMainController.class
 splendidworks\SceneMainController$1.class
 splendidworks\FXMLController.class
 model\Note.class
-parser\UserJsonParser$1.class
+splendidworks\FXMLController$1.class
 splendidworks\NewNoteController.class
-splendidworks\MainApp.class
+parser\NoteJsonParser$1.class
+splendidworks\SceneMainController$2.class
+parser\NoteJsonParser.class
 parser\UserJsonParser.class

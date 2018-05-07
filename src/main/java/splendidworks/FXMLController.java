@@ -6,8 +6,10 @@ package splendidworks;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -15,9 +17,11 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javax.json.Json;
+import javax.ws.rs.NotAcceptableException;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -26,8 +30,20 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
+import model.AppUser;
+import parser.UserJsonParser;
 
 public class FXMLController implements Initializable {
+
+    private static AppUser user;
+
+    public static AppUser getUser() {
+        return user;
+    }
+
+    public static void setUser(AppUser user) {
+        FXMLController.user = user;
+    }
 
     // metavlites gia allilepidrasi me to GUI
     @FXML
@@ -42,6 +58,13 @@ public class FXMLController implements Initializable {
     private TextField usernameSignIn;
     @FXML
     private TextField passwordSignIn;
+    @FXML
+    private Label toggleLabel;
+    @FXML
+    private Label errorLabel;
+    @FXML
+    private Label headerLabel;  
+    
 
     @FXML
     // methodos pou antapokrinete sta patimata koubion
@@ -64,12 +87,12 @@ public class FXMLController implements Initializable {
             if (error == "") {
 
                 // paradeigma dimiourgias json model apo documentation https://docs.oracle.com/javaee/7/api/index.html?javax/json/JsonObjectBuilder.html
-                    String json = Json.createObjectBuilder()
+                String json = Json.createObjectBuilder()
                         .add("password", passwordRegister.getText())
                         .add("username", usernameRegister.getText())
                         .build()
                         .toString();
-                
+
                 // Set up our client and target our JAX-RS service 
                 Client client = ClientBuilder.newClient();
                 WebTarget target = client.target("http://localhost:8080/Notepad_server_side/user/add/");
@@ -78,9 +101,23 @@ public class FXMLController implements Initializable {
                 Entity<String> data = Entity.entity(json, MediaType.APPLICATION_JSON_TYPE);
                 System.out.print("op" + data.getEntity());
                 // Then send a post request to the target service
-                String result = target.request(MediaType.APPLICATION_JSON_TYPE).post(data, String.class);
+                try {
+                    String result = target.request(MediaType.APPLICATION_JSON_TYPE).post(data, String.class);
 
-                //changeScene(event);
+                    client = ClientBuilder.newClient();
+                    client.register(UserJsonParser.class);
+                    WebTarget clientTarget = client.target("http://localhost:8080/Notepad_server_side/user/checkbyyname/{beginBy}");
+                    clientTarget = clientTarget.resolveTemplate("beginBy", usernameRegister.getText());
+                    GenericType<List<AppUser>> listc = new GenericType<List<AppUser>>() {
+                    };
+                    setUser(clientTarget.request("application/json").get(listc).get(0));
+                    
+                    changeScene(event);
+                } catch (NotAcceptableException e) 
+                {
+                    error = String.format("User allready exists");
+                }
+
             }
 
         }
@@ -88,18 +125,72 @@ public class FXMLController implements Initializable {
 
             if (usernameSignIn.getText().equals("")) //o elegxos gia to sign in.
             {
-                error = String.format("You need to have a username");
+                error = String.format("Please provide a username");
             }
             if (passwordSignIn.getText().equals("")) {
-                error += String.format("\nYou need to have a password");
+                error += String.format("\nPlease provide a password");
             }
             if (error == "") {
-                System.out.println("ok2");
-                changeScene(event);
+                
+                try
+                {
+                    Client client = ClientBuilder.newClient();
+                    client.register(UserJsonParser.class);
+                    WebTarget clientTarget = client.target("http://localhost:8080/Notepad_server_side/user/checkbyyname/{beginBy}");
+                    clientTarget = clientTarget.resolveTemplate("beginBy", usernameSignIn.getText());
+                    GenericType<List<AppUser>> listc = new GenericType<List<AppUser>>() {
+                    };
+                    setUser(clientTarget.request("application/json").get(listc).get(0));
+                    changeScene(event);
+                }
+                catch(NotAcceptableException e)
+                {
+                    error = String.format("User not found");
+                }
+                
             }
 
         }
-        System.out.println(error);
+        errorLabel.setText(error);
+    }
+    
+    @FXML
+    /** methodos antikatastasis components signIn/register */
+    private void handleToggleAction(MouseEvent event) throws IOException {
+        
+        String signInText = String.format("Not a member? Click here to register instead!");
+        String registerText = String.format("Allready a member? Click here to login instead!");
+        
+        
+        if (toggleLabel.getText().equals(signInText))
+        {
+            toggleLabel.setText(registerText);
+            headerLabel.setText("Register");
+            
+            registerBtn.setVisible(true);
+            signBtn.setVisible(false);
+            
+            usernameRegister.setVisible(true);
+            usernameSignIn.setVisible(false);
+                    
+            passwordRegister.setVisible(true);
+            passwordSignIn.setVisible(false);
+                    
+        }
+        else
+        {
+            toggleLabel.setText(signInText);
+            headerLabel.setText("Sign In");
+            
+            registerBtn.setVisible(false);
+            signBtn.setVisible(true);
+            
+            usernameRegister.setVisible(false);
+            usernameSignIn.setVisible(true);
+                    
+            passwordRegister.setVisible(false);
+            passwordSignIn.setVisible(true);
+        }
     }
 
     // methodos allagis apo parathiro login/register sto kirio parathiro tis efarmogis

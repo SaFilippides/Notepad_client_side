@@ -11,15 +11,41 @@ package model;
  */
 public class Note
 {
- 
+    
+    private Integer id;
+    private Integer user_id;
     private String name;
+
+    public Note(String name, String imageURL, String note) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public Integer getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(Integer user_id) {
+        this.user_id = user_id;
+    }
     private String imageURL;
     private String note;
 
-    public Note(String name, String imageURL, String note) {
-        this.name = name;
-        this.imageURL = imageURL;
-        this.note = note;
+     public Note() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Note(Integer id) {
+        super();
+        this.id = id;
     }
 
     public String getName() {
