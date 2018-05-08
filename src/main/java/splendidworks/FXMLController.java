@@ -18,6 +18,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javax.json.Json;
@@ -53,11 +54,11 @@ public class FXMLController implements Initializable {
     @FXML
     private TextField usernameRegister;
     @FXML
-    private TextField passwordRegister;
+    private PasswordField passwordRegister;
     @FXML
     private TextField usernameSignIn;
     @FXML
-    private TextField passwordSignIn;
+    private PasswordField passwordSignIn;
     @FXML
     private Label toggleLabel;
     @FXML
@@ -106,8 +107,9 @@ public class FXMLController implements Initializable {
 
                     client = ClientBuilder.newClient();
                     client.register(UserJsonParser.class);
-                    WebTarget clientTarget = client.target("http://localhost:8080/Notepad_server_side/user/checkbyyname/{beginBy}");
-                    clientTarget = clientTarget.resolveTemplate("beginBy", usernameRegister.getText());
+                    WebTarget clientTarget = client.target("http://localhost:8080/Notepad_server_side/user/checkbyyname/{username}/{password}");
+                    clientTarget = clientTarget.resolveTemplate("username", usernameRegister.getText());
+                    clientTarget = clientTarget.resolveTemplate("password", passwordRegister.getText());
                     GenericType<List<AppUser>> listc = new GenericType<List<AppUser>>() {
                     };
                     setUser(clientTarget.request("application/json").get(listc).get(0));
@@ -136,8 +138,10 @@ public class FXMLController implements Initializable {
                 {
                     Client client = ClientBuilder.newClient();
                     client.register(UserJsonParser.class);
-                    WebTarget clientTarget = client.target("http://localhost:8080/Notepad_server_side/user/checkbyyname/{beginBy}");
-                    clientTarget = clientTarget.resolveTemplate("beginBy", usernameSignIn.getText());
+                    WebTarget clientTarget = client.target("http://localhost:8080/Notepad_server_side/user/checkbyyname/{username}/{password}");
+                    clientTarget = clientTarget.resolveTemplate("username", usernameSignIn.getText());
+                    clientTarget = clientTarget.resolveTemplate("password", passwordSignIn.getText());
+                    
                     GenericType<List<AppUser>> listc = new GenericType<List<AppUser>>() {
                     };
                     setUser(clientTarget.request("application/json").get(listc).get(0));
@@ -145,7 +149,7 @@ public class FXMLController implements Initializable {
                 }
                 catch(NotAcceptableException e)
                 {
-                    error = String.format("User not found");
+                    error = String.format("Username or password is incorrect");
                 }
                 
             }

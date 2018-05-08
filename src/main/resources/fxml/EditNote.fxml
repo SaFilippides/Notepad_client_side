@@ -7,10 +7,10 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="478.0" prefWidth="337.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="splendidworks.NewNoteController">
-    <stylesheets>
-        <URL value="@/styles/newnote.css" />
-    </stylesheets>
+<AnchorPane id="AnchorPane" prefHeight="478.0" prefWidth="337.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="splendidworks.EditNoteController">
+   <stylesheets>
+      <URL value="@/styles/newnote.css" />
+   </stylesheets>
    <children>
       <TextField fx:id="noteNameTf" layoutX="18.0" layoutY="10.0" prefHeight="25.0" prefWidth="295.0" promptText="Insert Title..." />
       <TextArea fx:id="noteTa" layoutX="18.0" layoutY="46.0" prefHeight="295.0" prefWidth="295.0" promptText="Your note..." />

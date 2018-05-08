@@ -1,5 +1,7 @@
 splendidworks\FXMLController$2.class
 parser\UserJsonParser$1.class
+splendidworks\SceneMainController$3.class
+splendidworks\EditNoteController.class
 splendidworks\MainApp.class
 model\AppUser.class
 splendidworks\SceneMainController.class
@@ -8,6 +10,7 @@ splendidworks\FXMLController.class
 model\Note.class
 splendidworks\FXMLController$1.class
 splendidworks\NewNoteController.class
+splendidworks\SceneMainController$4.class
 parser\NoteJsonParser$1.class
 splendidworks\SceneMainController$2.class
 parser\NoteJsonParser.class

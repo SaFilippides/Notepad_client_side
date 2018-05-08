@@ -1,10 +1,10 @@
+package splendidworks;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package splendidworks;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -35,9 +35,9 @@ import org.apache.http.impl.client.HttpClients;
 /**
  * FXML Controller class
  *
- * @author McCormick
+ * @author filip
  */
-public class NewNoteController implements Initializable {
+public class EditNoteController implements Initializable {
 
     /**
      * Initializes the controller class.
@@ -57,7 +57,10 @@ public class NewNoteController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        
+        
+        noteNameTf.setText(SceneMainController.getNoteObject().getName());
+        noteTa.setText(SceneMainController.getNoteObject().getNote());
     }
 
     @FXML
@@ -76,10 +79,10 @@ public class NewNoteController implements Initializable {
             post.setEntity(entity);
             HttpResponse response = httpclient.execute(post);
 
-            
         }
         // paradeigma dimiourgias json model apo documentation https://docs.oracle.com/javaee/7/api/index.html?javax/json/JsonObjectBuilder.html
         String json = Json.createObjectBuilder()
+                .add("id", SceneMainController.getNoteObject().getId())
                 .add("name", noteNameTf.getText())
                 .add("note", noteTa.getText())
                 .add("imagePath", imgName)
@@ -89,21 +92,18 @@ public class NewNoteController implements Initializable {
 
         // Set up our client and target our JAX-RS service 
         Client client = ClientBuilder.newClient();
-        WebTarget target = client.target("http://localhost:8080/Notepad_server_side/note/add/");
+        WebTarget target = client.target("http://localhost:8080/Notepad_server_side/note/update");
         // Build our request JSON into an 'Entity'. Replace 'myData' with your JSON
         Entity<String> data = Entity.entity(json, MediaType.APPLICATION_JSON_TYPE);
-        System.out.println("op" + data.getEntity());
-        System.out.println("nameee" + noteNameTf.getText());
 
         // Then send a post request to the target service
-        String result = target.request(MediaType.APPLICATION_JSON_TYPE).post(data, String.class);
+        String result = target.request(MediaType.APPLICATION_JSON_TYPE).put(data, String.class);
         closeButtonAction();
     }
 
     @FXML
     // methodos pou antapokrinete sta patimata koubion
     private void handleFileChooser(ActionEvent event) throws IOException {
-        System.out.println("filechooser");
         fileChooser = new FileChooser();
         fileChooser.setTitle("Select an Image");
         fileChooser.setInitialDirectory(new File("C:\\Users"));
@@ -121,7 +121,6 @@ public class NewNoteController implements Initializable {
         }
 
     }
-
 
     @FXML
     private void closeButtonAction() {
