@@ -15,7 +15,28 @@ public class Note
     private Integer id;
     private Integer user_id;
     private String name;
+    private String imageURL;
+    private String note;
+    private String city;
+    private String date;
 
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+    
+    
     public Note(String name, String imageURL, String note) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -27,8 +48,7 @@ public class Note
     public void setUser_id(Integer user_id) {
         this.user_id = user_id;
     }
-    private String imageURL;
-    private String note;
+    
 
      public Note() {
         super();

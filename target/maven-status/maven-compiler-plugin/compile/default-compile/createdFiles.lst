@@ -1,8 +1,13 @@
 splendidworks\FXMLController$2.class
 parser\UserJsonParser$1.class
+splendidworks\SceneMainController$5.class
+utility\GeoLocation.class
 splendidworks\SceneMainController$3.class
 splendidworks\EditNoteController.class
+splendidworks\SceneMainController$8.class
 splendidworks\MainApp.class
+parser\NLPtokenizer.class
+splendidworks\SceneMainController$6.class
 model\AppUser.class
 splendidworks\SceneMainController.class
 splendidworks\SceneMainController$1.class
@@ -11,7 +16,9 @@ model\Note.class
 splendidworks\FXMLController$1.class
 splendidworks\NewNoteController.class
 splendidworks\SceneMainController$4.class
+utility\DateStamp.class
 parser\NoteJsonParser$1.class
 splendidworks\SceneMainController$2.class
 parser\NoteJsonParser.class
 parser\UserJsonParser.class
+splendidworks\SceneMainController$7.class

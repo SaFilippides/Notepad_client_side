@@ -7,6 +7,7 @@ package splendidworks;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -31,6 +32,8 @@ import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import utility.DateStamp;
+import utility.GeoLocation;
 
 /**
  * FXML Controller class
@@ -84,6 +87,8 @@ public class NewNoteController implements Initializable {
                 .add("note", noteTa.getText())
                 .add("imagePath", imgName)
                 .add("user_id", FXMLController.getUser().getId())
+                .add("date", DateStamp.getDate())
+                .add("city", GeoLocation.getCity())
                 .build()
                 .toString();
 

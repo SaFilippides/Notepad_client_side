@@ -71,6 +71,12 @@ public class NoteJsonParser implements MessageBodyReader<List<Note>> {
                             case "user_id":
                                 note.setUser_id(parser.getInt());
                                 break;
+                            case "city":
+                                note.setCity(parser.getString());
+                                break;
+                            case "date":
+                                note.setDate(parser.getString());
+                                break;
                             default:
                                 break;
                         }

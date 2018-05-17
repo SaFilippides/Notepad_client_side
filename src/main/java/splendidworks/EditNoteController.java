@@ -31,6 +31,8 @@ import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import utility.DateStamp;
+import utility.GeoLocation;
 
 /**
  * FXML Controller class
@@ -87,6 +89,8 @@ public class EditNoteController implements Initializable {
                 .add("note", noteTa.getText())
                 .add("imagePath", imgName)
                 .add("user_id", FXMLController.getUser().getId())
+                .add("date", DateStamp.getDate())
+                .add("city", GeoLocation.getCity())
                 .build()
                 .toString();
 
