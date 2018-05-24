@@ -30,6 +30,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
@@ -61,9 +62,13 @@ public class SceneMainController implements Initializable {
     @FXML
     private ListView<Note> cityNamesListView;
     @FXML
+    private ListView<Note> searchListView;
+    @FXML
     private ImageView imageView;
     @FXML
     private TextArea noteTextArea;
+    @FXML
+    private TextField searchTextfield;
     @FXML
     private DatePicker datepicker;
     @FXML
@@ -174,6 +179,7 @@ public class SceneMainController implements Initializable {
 
     private ObservableList<Note> notes = null;
     private ObservableList<Note> notesByDate = FXCollections.observableArrayList();
+    private ObservableList<Note> notesBySearch = FXCollections.observableArrayList();
     private ObservableList<String> cityNames = FXCollections.observableArrayList();
     private ObservableList<Note> cityNamesList = FXCollections.observableArrayList();
 
@@ -285,6 +291,38 @@ public class SceneMainController implements Initializable {
                 }
             }
             );
+
+            searchListView.getSelectionModel().selectedItemProperty().addListener(
+                    new ChangeListener<Note>() {
+                @Override
+                public void changed(ObservableValue<? extends Note> ov,
+                        Note old_val, Note new_val) {
+                    if (new_val != null) {
+                        imageView.setImage(new Image(new_val.getImageURL()));
+                        note = new_val;
+                        noteTextArea.setText(new_val.getNote());
+                    }
+                }
+            }
+            );
+
+            // Listen for TextField text changes
+            searchTextfield.textProperty().addListener(new ChangeListener<String>() {
+                @Override
+                public void changed(ObservableValue<? extends String> observable,
+                        String oldValue, String newValue) {
+                        //System.out.println("test");
+                    for (Note note : notes) {
+                        //System.out.println("TEST " + localDate + " " + note.getDate());
+                        if (note.getName().contains(newValue) || note.getNote().contains(newValue)) {
+                            //System.out.println("check");
+                            notesBySearch.add(note);
+                        }
+                    }
+                    searchListView.setItems(notesBySearch);
+                    notesBySearch = FXCollections.observableArrayList(); //flush
+                }
+            });
 
         } catch (Exception ex) {
 

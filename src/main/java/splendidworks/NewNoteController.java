@@ -7,12 +7,12 @@ package splendidworks;
 
 import java.io.File;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -48,6 +48,8 @@ public class NewNoteController implements Initializable {
     private FileChooser fileChooser;
     private File selectedFile;
     private String imgName = "";
+    private String location = "";
+    private String date = "";
 
     @FXML
     private TextField noteNameTf;
@@ -57,6 +59,12 @@ public class NewNoteController implements Initializable {
 
     @FXML
     private Label fileChooserLbl;
+    
+    @FXML
+    private CheckBox locationCheck;
+    
+    @FXML
+    private CheckBox dateCheck;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -81,14 +89,25 @@ public class NewNoteController implements Initializable {
 
             
         }
+        
+        if (locationCheck.isSelected())
+        {
+            location = GeoLocation.getCity();
+        }
+        if (dateCheck.isSelected())
+        {
+            date = DateStamp.getDate();
+        }
+        
+        
         // paradeigma dimiourgias json model apo documentation https://docs.oracle.com/javaee/7/api/index.html?javax/json/JsonObjectBuilder.html
         String json = Json.createObjectBuilder()
                 .add("name", noteNameTf.getText())
                 .add("note", noteTa.getText())
                 .add("imagePath", imgName)
                 .add("user_id", FXMLController.getUser().getId())
-                .add("date", DateStamp.getDate())
-                .add("city", GeoLocation.getCity())
+                .add("date", date)
+                .add("city", location)
                 .build()
                 .toString();
 

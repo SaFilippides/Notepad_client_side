@@ -1,3 +1,4 @@
+splendidworks\SceneMainController$10.class
 splendidworks\FXMLController$2.class
 parser\UserJsonParser$1.class
 splendidworks\SceneMainController$5.class
@@ -15,6 +16,7 @@ splendidworks\FXMLController.class
 model\Note.class
 splendidworks\FXMLController$1.class
 splendidworks\NewNoteController.class
+splendidworks\SceneMainController$9.class
 splendidworks\SceneMainController$4.class
 utility\DateStamp.class
 parser\NoteJsonParser$1.class
